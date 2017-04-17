@@ -2,12 +2,12 @@ use rand::{SeedableRng, StdRng};
 use rand::distributions::{IndependentSample, Range};
 
 pub struct Die {
-    pub sides: i8,
+    pub sides: u8,
     rng: StdRng,
 }
 
 impl<'a> Die {
-    pub fn roll(&mut self, n: i8) -> Vec<i8> {
+    pub fn roll(&mut self, n: u8) -> Vec<u8> {
         let between = Range::new(1, self.sides + 1);
         let mut result = Vec::new();
 
@@ -19,11 +19,11 @@ impl<'a> Die {
         result
     }
 
-    pub fn add_roll(&mut self, n: i8) -> i8 {
+    pub fn add_roll(&mut self, n: u8) -> u8 {
         self.roll(n).iter().sum()
     }
 
-    pub fn new(sides: i8, seed: &'a [usize]) -> Die {
+    pub fn new(sides: u8, seed: &'a [usize]) -> Die {
         let rng: StdRng = SeedableRng::from_seed(seed);
 
         Die {

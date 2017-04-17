@@ -1,5 +1,6 @@
 use rusqlite::Connection;
 use rusqlite::Error;
+use std::fmt;
 
 #[derive(Debug)]
 pub struct Characteristics {
@@ -19,6 +20,20 @@ pub enum Values {
     Intelligence,
     Education,
     Social,
+}
+
+impl fmt::Display for Values {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let printable = match *self {
+            Values::Strength => "Strength",
+            Values::Dexterity => "Dexterity",
+            Values::Endurance => "Endurance",
+            Values::Intelligence => "Intelligence",
+            Values::Education => "Education",
+            Values::Social => "Social",
+        };
+        write!(f, "{}", printable)
+    }
 }
 
 impl Characteristics {
