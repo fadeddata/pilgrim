@@ -1,0 +1,13 @@
+[package]
+
+name = "hello_world"
+version = "0.0.1"
+authors = [ "Your name <you@example.com>" ]
+
+[dependencies]
+time = "0.1.36"
+rand = "0.3"
+
+[dependencies.rusqlite]
+version = "0.11.0"
+features = ["bundled"]
