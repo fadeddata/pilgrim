@@ -4,6 +4,8 @@ extern crate rand;
 
 mod characteristics;
 mod dice;
+mod home_worlds;
+mod skills;
 
 //use time::Timespec;
 use rusqlite::Connection;
