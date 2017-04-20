@@ -4,7 +4,7 @@ extern crate rand;
 
 mod characteristics;
 mod dice;
-mod home_worlds;
+mod homeworlds;
 mod skills;
 mod pseudo_hex;
 
@@ -13,19 +13,54 @@ use rusqlite::Connection;
 use characteristics::*;
 use dice::Die;
 use std::io;
+use homeworlds::*;
 
 fn main() {
-    let conn = Connection::open_in_memory().unwrap();
-    Characteristics::create_tables(&conn);
-
     let ch = roll_characteristics();
+    let homeworld = choose_homeworld();
 
-    ch.insert(&conn);
+    println!("Characteristics: {:?}", ch);
+    println!("Characteristics UPP: {}", ch);
+    println!("Homeworld : {:?}", homeworld);
+}
 
-    let ch_iter = Characteristics::get_all(&conn);
+fn choose_homeworld() -> Homeworld {
+    use Descriptor::*;
+    use TradeCode::*;
 
-    for characteristics in ch_iter {
-        println!("Found {:?}", characteristics);
+    let mut descriptor_pick: usize = 0;
+    let descriptors = homeworlds::descriptors();
+
+    while descriptor_pick == 0 {
+        println!("Pick a descriptor. (1-{}).", descriptors.len());
+
+        let mut input = String::new();
+        io::stdin()
+            .read_line(&mut input)
+            .expect("failed to read line");
+
+        descriptor_pick = match input.trim().parse() {
+            Ok(num) if num > 0 && num <= (descriptors.len() as usize) => num,
+
+            Ok(_) => {
+                println!("Please pick a number between 1 and {}.", descriptors.len());
+                continue;
+            }
+
+            Err(_) => {
+                println!("Please type a number.");
+                continue;
+            }
+        };
+    }
+
+    descriptor_pick = descriptor_pick - 1;
+    let descriptor = descriptors[descriptor_pick].clone();
+
+    Homeworld {
+        entity_id: 0,
+        descriptor: descriptor,
+        trade_code: Agricultural,
     }
 }
 
@@ -95,7 +130,7 @@ fn roll_characteristics() -> Characteristics {
             Social => social = ch_rolls.swap_remove(pick),
         }
     }
-    
+
     Characteristics {
         entity_id: 0,
         strength: strength,

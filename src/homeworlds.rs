@@ -1,26 +1,41 @@
+use skills::*;
 use skills::Skill::*;
-use skills::Skill;
-use skills::Skills;
 
-enum Descriptors {
+
+#[derive(Debug)]
+pub struct Homeworld {
+    pub entity_id: u32,
+    pub descriptor: Descriptor,
+    pub trade_code: TradeCode,
+}
+
+pub fn descriptors() -> Vec<Descriptor> {
+    use Descriptor::*;
+
+    vec![NoLaw, LowLaw, MediumLaw, HighLaw]
+}
+
+#[derive(Clone, Debug)]
+pub enum Descriptor {
     NoLaw,
     LowLaw,
     MediumLaw,
     HighLaw,
 }
 
-impl Skills for Descriptors {
+impl Skills for Descriptor {
     fn skills(&self) -> Vec<Skill> {
-        use home_worlds::Descriptors::*;
+        use Descriptor::*;
 
         match *self {
             NoLaw | LowLaw | MediumLaw => vec![GunCombat],
-            HighLaw => vec![MeleeCombat]
+            HighLaw => vec![MeleeCombat],
         }
     }
 }
 
-enum TradeCodes {
+#[derive(Clone, Debug)]
+pub enum TradeCode {
     Agricultural,
     Asteroid,
     Desert,
@@ -37,9 +52,28 @@ enum TradeCodes {
     Vacuum,
 }
 
-impl TradeCodes {
+pub fn trade_codes() -> Vec<TradeCode> {
+    use TradeCode::*;
+    vec![Agricultural,
+         Asteroid,
+         Desert,
+         FluidOceans,
+         Garden,
+         HighTechnology,
+         HighPopulation,
+         IceCapped,
+         Industrial,
+         LowTechnology,
+         Poor,
+         Rich,
+         WaterWorld,
+         Vacuum]
+}
+
+impl TradeCode {
     fn skills(&self) -> Vec<Skill> {
-        use home_worlds::TradeCodes::*;
+        use TradeCode::*;
+
         match *self {
             Agricultural | Garden | Poor => vec![Animals],
             Asteroid | IceCapped | Vacuum => vec![ZeroG],
