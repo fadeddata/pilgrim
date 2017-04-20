@@ -24,7 +24,7 @@ fn main() {
     println!("Homeworld : {:?}", homeworld);
 }
 
-fn pick_a_thing<T: Clone>(things: Vec<T>, header: &str) -> T {
+fn pick_a_thing<T>(things: &[T], header: &str) -> usize {
     let mut pick: usize = 0;
 
     while pick == 0 {
@@ -51,8 +51,7 @@ fn pick_a_thing<T: Clone>(things: Vec<T>, header: &str) -> T {
         };
     }
 
-    pick = pick - 1;
-    things[pick].clone()
+    pick - 1
 }
 
 fn choose_homeworld() -> Homeworld {
@@ -61,11 +60,13 @@ fn choose_homeworld() -> Homeworld {
 
     let descriptors = homeworlds::descriptors();
     let descriptors_names = format!("Descriptors: {:?}", descriptors);
-    let descriptor = pick_a_thing(descriptors, descriptors_names.as_str());
+    let descriptor_pick = pick_a_thing(&descriptors, descriptors_names.as_str());
+    let descriptor = descriptors[descriptor_pick].clone();
 
     let trade_codes = homeworlds::trade_codes();
     let trade_codes_name = format!("Trade codes: {:?}", trade_codes);
-    let trade_code = pick_a_thing(trade_codes, trade_codes_name.as_str());
+    let trade_code_pick = pick_a_thing(&trade_codes, trade_codes_name.as_str());
+    let trade_code = trade_codes[trade_code_pick].clone();
 
     Homeworld {
         entity_id: 0,
@@ -100,37 +101,9 @@ fn roll_characteristics() -> Characteristics {
     let mut done: bool;
 
     for char in chars {
-        let mut pick: usize = 0;
-        done = false;
+        let rolls_format = format!("Rolls {:?}", ch_rolls);
+        let pick = pick_a_thing(&ch_rolls, rolls_format.as_str());
 
-        while !done {
-            println!("Rolls {:?}", ch_rolls);
-            println!("Pick a roll for {} (1-{}).", char, ch_rolls.len());
-
-            let mut input = String::new();
-            io::stdin()
-                .read_line(&mut input)
-                .expect("failed to read line");
-
-            pick = match input.trim().parse() {
-                Ok(num) if num > 0 && num <= (ch_rolls.len() as usize) => num,
-
-                Ok(_) => {
-                    println!("Please pick a number between 1 and {}.", ch_rolls.len());
-                    done = false;
-                    continue;
-                }
-
-                Err(_) => {
-                    println!("Please type a number.");
-                    done = false;
-                    continue;
-                }
-            };
-
-            done = true;
-        }
-        pick = pick - 1;
         match char {
             Strength => strength = ch_rolls.swap_remove(pick),
             Dexterity => dexterity = ch_rolls.swap_remove(pick),
