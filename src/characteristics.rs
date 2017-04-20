@@ -13,7 +13,52 @@ pub struct Characteristics {
     pub social: u8,
 }
 
-pub enum Values {
+impl fmt::Display for Characteristics {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        use pseudo_hex::num_to_pseudo_hex;
+        let chars = vec![self.strength ,
+                         self.dexterity,
+                         self.endurance,
+                         self.intelligence,
+                         self.education,
+                         self.social];
+
+        let upp = chars.iter().map(|&n| num_to_pseudo_hex(n)).collect::<String>();
+        write!(f, "{}", upp)
+    }
+}
+
+#[test]
+fn test_characteristics_display() {
+    let char1 =  Characteristics {
+        entity_id: 0,
+        strength: 1,
+        dexterity: 2,
+        endurance: 3,
+        intelligence: 4,
+        education: 5,
+        social: 6,
+    };
+
+    let char1Fmt = format!("{}", char1);
+    assert_eq!(char1Fmt, "123456");
+
+        let char2 =  Characteristics {
+        entity_id: 0,
+        strength: 10,
+        dexterity: 11,
+        endurance: 12,
+        intelligence: 11,
+        education: 10,
+        social: 9,
+    };
+
+    let char2Fmt = format!("{}", char2);
+    assert_eq!(char2Fmt, "ABCBA9");
+
+}
+
+pub enum Characteristic {
     Strength,
     Dexterity,
     Endurance,
@@ -22,15 +67,16 @@ pub enum Values {
     Social,
 }
 
-impl fmt::Display for Values {
+impl fmt::Display for Characteristic {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        use Characteristic::*;
         let printable = match *self {
-            Values::Strength => "Strength",
-            Values::Dexterity => "Dexterity",
-            Values::Endurance => "Endurance",
-            Values::Intelligence => "Intelligence",
-            Values::Education => "Education",
-            Values::Social => "Social",
+            Strength => "Strength",
+            Dexterity => "Dexterity",
+            Endurance => "Endurance",
+            Intelligence => "Intelligence",
+            Education => "Education",
+            Social => "Social",
         };
         write!(f, "{}", printable)
     }
@@ -39,7 +85,7 @@ impl fmt::Display for Values {
 impl Characteristics {
     pub fn insert(&self, conn: &Connection) {
         conn.execute("INSERT INTO characteristics (strength, dexterity, endurance, intelligence, education, social)
-                  VALUES (?1, ?2, ?3, ?4, ?5, ?6)",
+                  Characteristic (?1, ?2, ?3, ?4, ?5, ?6)",
                  &[&self.strength, &self.dexterity, &self.endurance, &self.intelligence, &self.education, &self.social]).unwrap();
     }
 

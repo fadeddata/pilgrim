@@ -30,18 +30,20 @@ fn main() {
 }
 
 fn roll_characteristics() -> Characteristics {
+    use Characteristic::*;
+
     let mut ch_rolls = Vec::with_capacity(6);
     let mut d6 = Die::new(6, &[55]);
     for _ in 0..6 {
         ch_rolls.push(d6.add_roll(2));
     }
 
-    let chars = vec![Values::Strength,
-                     Values::Dexterity,
-                     Values::Endurance,
-                     Values::Intelligence,
-                     Values::Education,
-                     Values::Social];
+    let chars = vec![Strength,
+                     Dexterity,
+                     Endurance,
+                     Intelligence,
+                     Education,
+                     Social];
 
     let mut strength = 0;
     let mut dexterity = 0;
@@ -85,12 +87,12 @@ fn roll_characteristics() -> Characteristics {
         }
         pick = pick - 1;
         match char {
-            Values::Strength => strength = ch_rolls.swap_remove(pick),
-            Values::Dexterity => dexterity = ch_rolls.swap_remove(pick),
-            Values::Endurance => endurance = ch_rolls.swap_remove(pick),
-            Values::Intelligence => intelligence = ch_rolls.swap_remove(pick),
-            Values::Education => education = ch_rolls.swap_remove(pick),
-            Values::Social => social = ch_rolls.swap_remove(pick),
+            Strength => strength = ch_rolls.swap_remove(pick),
+            Dexterity => dexterity = ch_rolls.swap_remove(pick),
+            Endurance => endurance = ch_rolls.swap_remove(pick),
+            Intelligence => intelligence = ch_rolls.swap_remove(pick),
+            Education => education = ch_rolls.swap_remove(pick),
+            Social => social = ch_rolls.swap_remove(pick),
         }
     }
     
