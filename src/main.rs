@@ -6,6 +6,7 @@ mod characteristics;
 mod dice;
 mod home_worlds;
 mod skills;
+mod pseudo_hex;
 
 //use time::Timespec;
 use rusqlite::Connection;
