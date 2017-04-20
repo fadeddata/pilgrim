@@ -24,26 +24,23 @@ fn main() {
     println!("Homeworld : {:?}", homeworld);
 }
 
-fn choose_homeworld() -> Homeworld {
-    use Descriptor::*;
-    use TradeCode::*;
+fn pick_a_thing<T: Clone>(things: Vec<T>, header: &str) -> T {
+    let mut pick: usize = 0;
 
-    let mut descriptor_pick: usize = 0;
-    let descriptors = homeworlds::descriptors();
-
-    while descriptor_pick == 0 {
-        println!("Pick a descriptor. (1-{}).", descriptors.len());
+    while pick == 0 {
+        println!("{}", header);
+        println!("Please select. (1-{}).", things.len());
 
         let mut input = String::new();
         io::stdin()
             .read_line(&mut input)
             .expect("failed to read line");
 
-        descriptor_pick = match input.trim().parse() {
-            Ok(num) if num > 0 && num <= (descriptors.len() as usize) => num,
+        pick = match input.trim().parse() {
+            Ok(num) if num > 0 && num <= (things.len() as usize) => num,
 
             Ok(_) => {
-                println!("Please pick a number between 1 and {}.", descriptors.len());
+                println!("Please pick a number between 1 and {}.", things.len());
                 continue;
             }
 
@@ -54,13 +51,26 @@ fn choose_homeworld() -> Homeworld {
         };
     }
 
-    descriptor_pick = descriptor_pick - 1;
-    let descriptor = descriptors[descriptor_pick].clone();
+    pick = pick - 1;
+    things[pick].clone()
+}
+
+fn choose_homeworld() -> Homeworld {
+    use Descriptor::*;
+    use TradeCode::*;
+
+    let descriptors = homeworlds::descriptors();
+    let descriptors_names = format!("Descriptors: {:?}", descriptors);
+    let descriptor = pick_a_thing(descriptors, descriptors_names.as_str());
+
+    let trade_codes = homeworlds::trade_codes();
+    let trade_codes_name = format!("Trade codes: {:?}", trade_codes);
+    let trade_code = pick_a_thing(trade_codes, trade_codes_name.as_str());
 
     Homeworld {
         entity_id: 0,
         descriptor: descriptor,
-        trade_code: Agricultural,
+        trade_code: trade_code,
     }
 }
 
