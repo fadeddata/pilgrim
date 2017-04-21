@@ -6,21 +6,23 @@ pub trait Skills {
 
 fn education_skills() -> Vec<Skill> {
     use skills::Skill::*;
-    vec![Admin,
-         Advocate,
-         Animals,
-         Carousing,
-         Comms,
-         Computer,
-         Electronics,
-         Engineering,
-         LifeSciences,
-         Linguistics,
-         Mechanics,
-         Medicine,
-         PhysicalSciences,
-         SocialSciences,
-         SpaceSciences]
+    vec![
+        Admin,
+        Advocate,
+        Animals,
+        Carousing,
+        Comms,
+        Computer,
+        Electronics,
+        Engineering,
+        LifeSciences,
+        Linguistics,
+        Mechanics,
+        Medicine,
+        PhysicalSciences,
+        SocialSciences,
+        SpaceSciences,
+    ]
 }
 
 fn cascade_from_skill(skill: Skill) -> Skill {
@@ -34,7 +36,7 @@ fn cascade_from_skill(skill: Skill) -> Skill {
         Aircraft | Mole | Watercraft | WheeledVehicle => Vehicle,
         GravVehicle | RotorAircraft | WingedAircraft => Aircraft,
         Motorboats | OceanShips | SailingShips | Submarine => Watercraft,
-        _ => skill
+        _ => skill,
     }
 }
 
@@ -43,14 +45,45 @@ fn skills_from_cascade(skill: Skill) -> Vec<Skill> {
 
     match skill {
         Animals => vec![Farming, Riding, Survival, VeterinaryMedicine],
-        Sciences => vec![LifeSciences, PhysicalSciences, SocialSciences, SpaceSciences],
-        GunCombat => vec![Archery, EnergyPistol, EnergyRifle, Shotgun, SlugPistol, SlugRifle],
-        Gunnery => vec![BayWeapons, HeavyWeapons, Screens, SpinalMounts, TurretWeapons],
-        MeleeCombat => vec![BludgeoningWeapons, NaturalWeapons, PiercingWeapons, SlashingWeapons],
+        Sciences => {
+            vec![
+                LifeSciences,
+                PhysicalSciences,
+                SocialSciences,
+                SpaceSciences,
+            ]
+        }
+        GunCombat => {
+            vec![
+                Archery,
+                EnergyPistol,
+                EnergyRifle,
+                Shotgun,
+                SlugPistol,
+                SlugRifle,
+            ]
+        }
+        Gunnery => {
+            vec![
+                BayWeapons,
+                HeavyWeapons,
+                Screens,
+                SpinalMounts,
+                TurretWeapons,
+            ]
+        }
+        MeleeCombat => {
+            vec![
+                BludgeoningWeapons,
+                NaturalWeapons,
+                PiercingWeapons,
+                SlashingWeapons,
+            ]
+        }
         Vehicle => vec![Aircraft, Mole, Watercraft, WheeledVehicle],
         Aircraft => vec![GravVehicle, RotorAircraft, WingedAircraft],
         Watercraft => vec![Motorboats, OceanShips, SailingShips, Submarine],
-        _ => Vec::new()
+        _ => Vec::new(),
     }
 }
 

@@ -26,21 +26,26 @@ pub fn characteristic_modifier(num: u8) -> i8 {
         x if x >= 24 && x <= 26 => 6,
         x if x >= 27 && x <= 29 => 7,
         x if x >= 30 && x <= 32 => 8,
-        _ => 9
+        _ => 9,
     }
 }
 
 impl fmt::Display for Characteristics {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         use pseudo_hex::num_to_pseudo_hex;
-        let chars = vec![self.strength ,
-                         self.dexterity,
-                         self.endurance,
-                         self.intelligence,
-                         self.education,
-                         self.social];
+        let chars = vec![
+            self.strength,
+            self.dexterity,
+            self.endurance,
+            self.intelligence,
+            self.education,
+            self.social,
+        ];
 
-        let upp = chars.iter().map(|&n| num_to_pseudo_hex(n)).collect::<String>();
+        let upp = chars.iter()
+                       .map(|&n| num_to_pseudo_hex(n))
+                       .collect::<String>();
+
         write!(f, "{}", upp)
     }
 }
@@ -117,7 +122,7 @@ impl Characteristics {
 
 #[test]
 fn test_characteristics_display() {
-    let char1 =  Characteristics {
+    let char1 = Characteristics {
         entity_id: 0,
         strength: 1,
         dexterity: 2,
@@ -130,7 +135,7 @@ fn test_characteristics_display() {
     let char1Fmt = format!("{}", char1);
     assert_eq!(char1Fmt, "123456");
 
-        let char2 =  Characteristics {
+    let char2 = Characteristics {
         entity_id: 0,
         strength: 10,
         dexterity: 11,

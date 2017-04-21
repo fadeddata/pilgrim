@@ -1,6 +1,7 @@
 use std::collections::VecDeque;
 use std::string::String;
 
+#[cfg_attr(rustfmt, rustfmt_skip)]
 pub fn num_to_pseudo_hex(num: u8) -> String {
     let new_base = vec!['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
                         'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
@@ -24,6 +25,7 @@ pub fn num_to_pseudo_hex(num: u8) -> String {
 }
 
 #[test]
+#[cfg_attr(rustfmt, rustfmt_skip)]
 fn test_num_to_pseudo_hex() {
     let base = vec!['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
                     'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',

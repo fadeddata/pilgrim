@@ -55,9 +55,6 @@ fn pick_a_thing<T>(things: &[T], header: &str) -> usize {
 }
 
 fn choose_homeworld() -> Homeworld {
-    use Descriptor::*;
-    use TradeCode::*;
-
     let descriptors = homeworlds::descriptors();
     let descriptors_names = format!("Descriptors: {:?}", descriptors);
     let descriptor_pick = pick_a_thing(&descriptors, descriptors_names.as_str());
@@ -84,12 +81,14 @@ fn roll_characteristics() -> Characteristics {
         ch_rolls.push(d6.add_roll(2));
     }
 
-    let chars = vec![Strength,
-                     Dexterity,
-                     Endurance,
-                     Intelligence,
-                     Education,
-                     Social];
+    let chars = vec![
+        Strength,
+        Dexterity,
+        Endurance,
+        Intelligence,
+        Education,
+        Social,
+    ];
 
     let mut strength = 0;
     let mut dexterity = 0;
@@ -97,8 +96,6 @@ fn roll_characteristics() -> Characteristics {
     let mut intelligence = 0;
     let mut education = 0;
     let mut social = 0;
-
-    let mut done: bool;
 
     for char in chars {
         let rolls_format = format!("Rolls {:?}", ch_rolls);

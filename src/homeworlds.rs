@@ -54,20 +54,22 @@ pub enum TradeCode {
 
 pub fn trade_codes() -> Vec<TradeCode> {
     use TradeCode::*;
-    vec![Agricultural,
-         Asteroid,
-         Desert,
-         FluidOceans,
-         Garden,
-         HighTechnology,
-         HighPopulation,
-         IceCapped,
-         Industrial,
-         LowTechnology,
-         Poor,
-         Rich,
-         WaterWorld,
-         Vacuum]
+    vec![
+        Agricultural,
+        Asteroid,
+        Desert,
+        FluidOceans,
+        Garden,
+        HighTechnology,
+        HighPopulation,
+        IceCapped,
+        Industrial,
+        LowTechnology,
+        Poor,
+        Rich,
+        WaterWorld,
+        Vacuum,
+    ]
 }
 
 impl TradeCode {
