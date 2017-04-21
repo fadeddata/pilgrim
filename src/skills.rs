@@ -161,4 +161,6 @@ pub enum Skill {
     SailingShips,
     Submarine,
     WheeledVehicle,
+    Prospecting,
+    Perception,
 }

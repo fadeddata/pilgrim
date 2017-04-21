@@ -7,6 +7,7 @@ mod dice;
 mod homeworlds;
 mod skills;
 mod pseudo_hex;
+mod careers;
 
 //use time::Timespec;
 use rusqlite::Connection;
