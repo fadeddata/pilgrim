@@ -19,7 +19,12 @@ use homeworlds::*;
 fn main() {
     let ch = roll_characteristics();
     let homeworld = choose_homeworld();
+    let careers_names = careers::careers()
+        .iter()
+        .map(|ref n| n.name.clone())
+        .collect::<Vec<&str>>();
 
+    println!("{:?}", careers_names.join(", "));
     println!("Characteristics: {:?}", ch);
     println!("Characteristics UPP: {}", ch);
     println!("Homeworld : {:?}", homeworld);
