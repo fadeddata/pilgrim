@@ -35,7 +35,7 @@ pub enum Training {
 }
 
 
-pub fn careers<'a>() ->  Vec<Career<'a>> {
+pub fn careers<'a>() -> Vec<Career<'a>> {
     use self::MaterialBenefit::*;
     use self::Training::*;
     use characteristics::Characteristic::*;
@@ -544,9 +544,7 @@ pub fn careers<'a>() ->  Vec<Career<'a>> {
             commission: None,
             advancement: None,
             reenlistment: 6,
-            ranks: vec![
-                (None, Some(Carousing))
-            ],
+            ranks: vec![(None, Some(Carousing))],
             material_benefits: vec![
                 LowPassage,
                 MBC(Education),
@@ -596,9 +594,7 @@ pub fn careers<'a>() ->  Vec<Career<'a>> {
             commission: None,
             advancement: None,
             reenlistment: 6,
-            ranks: vec![
-                (None, Some(Survival))
-            ],
+            ranks: vec![(None, Some(Survival))],
             material_benefits: vec![
                 LowPassage,
                 MBC(Intelligence),
