@@ -1,8 +1,8 @@
 [package]
 
-name = "hello_world"
+name = "pilgrim"
 version = "0.0.1"
-authors = [ "Your name <you@example.com>" ]
+authors = [ "Dustin Withers <fadeddata@gmail.com>" ]
 
 [dependencies]
 time = "0.1.36"
