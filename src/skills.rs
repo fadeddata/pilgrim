@@ -4,7 +4,7 @@ pub trait Skills {
     fn skills(&self) -> Vec<Skill>;
 }
 
-fn education_skills() -> Vec<Skill> {
+pub fn education_skills() -> Vec<Skill> {
     use skills::Skill::*;
     vec![
         Admin,
@@ -92,6 +92,7 @@ struct CharacterSkills {
     pub skills: HashMap<Skill, u8>,
 }
 
+#[derive(Debug)]
 pub enum Skill {
     Admin,
     Advocate,
