@@ -13,7 +13,7 @@ impl Skills for Homeworld {
     fn skills(&self) -> Vec<Skill> {
         let mut descriptor_skills = self.descriptor.skills();
         let trade_code_skills = self.trade_code.skills();
-        
+
         descriptor_skills.extend(trade_code_skills);
 
         descriptor_skills

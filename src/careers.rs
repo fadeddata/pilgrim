@@ -1,22 +1,23 @@
 use characteristics::Characteristic;
 use skills::Skill;
 
-pub struct Career<'a> {
-    pub name: &'a str,
-    qualifications: (Characteristic, u8),
-    survival: (Characteristic, u8),
-    commission: Option<(Characteristic, u8)>,
-    advancement: Option<(Characteristic, u8)>,
-    reenlistment: u8,
-    ranks: Vec<(Option<&'static str>, Option<Skill>)>,
-    material_benefits: Vec<MaterialBenefit>,
-    cash_benefits: Vec<u32>,
-    personal_development: Vec<Training>,
-    service_skills: Vec<Training>,
-    specialist: Vec<Training>,
-    advanced_education: Vec<Training>,
+pub struct Career {
+    pub name: &'static str,
+    pub qualifications: (Characteristic, u8),
+    pub survival: (Characteristic, u8),
+    pub commission: Option<(Characteristic, u8)>,
+    pub advancement: Option<(Characteristic, u8)>,
+    pub reenlistment: u8,
+    pub ranks: Vec<(Option<&'static str>, Option<Skill>)>,
+    pub material_benefits: Vec<MaterialBenefit>,
+    pub cash_benefits: Vec<u32>,
+    pub personal_development: Vec<Training>,
+    pub service_skills: Vec<Training>,
+    pub specialist: Vec<Training>,
+    pub advanced_education: Vec<Training>,
 }
 
+#[derive(Debug)]
 pub enum MaterialBenefit {
     MBC(Characteristic),
     CourierVessel,
@@ -35,7 +36,7 @@ pub enum Training {
 }
 
 
-pub fn careers<'a>() -> Vec<Career<'a>> {
+pub fn careers() -> Vec<Career> {
     use self::MaterialBenefit::*;
     use self::Training::*;
     use characteristics::Characteristic::*;
@@ -1292,7 +1293,7 @@ pub fn careers<'a>() -> Vec<Career<'a>> {
                 (Some("Lt Colonel"), None),
                 (Some("Colonel"), None),
                 (Some("General"), None),
-                ],
+            ],
             material_benefits: vec![
                 LowPassage,
                 MBC(Intelligence),
@@ -1351,7 +1352,7 @@ pub fn careers<'a>() -> Vec<Career<'a>> {
                 (Some("Director"), Some(Admin)),
                 (Some("Vice-President"), None),
                 (Some("Executive Officer"), None),
-                ],
+            ],
             material_benefits: vec![
                 LowPassage,
                 MBC(Education),

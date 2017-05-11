@@ -50,6 +50,7 @@ impl fmt::Display for Characteristics {
     }
 }
 
+#[derive(Debug)]
 pub enum Characteristic {
     Strength,
     Dexterity,
