@@ -8,6 +8,7 @@ mod homeworlds;
 mod skills;
 mod pseudo_hex;
 mod careers;
+mod character;
 
 //use time::Timespec;
 use rusqlite::Connection;
@@ -16,6 +17,7 @@ use dice::Die;
 use std::io;
 use homeworlds::*;
 use skills::*;
+use character::*;
 
 fn main() {
     let ch = roll_characteristics();
