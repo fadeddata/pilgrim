@@ -1,6 +1,7 @@
 use characteristics::Characteristic;
 use skills::Skill;
 
+#[derive(Debug)]
 pub struct Career {
     pub name: &'static str,
     pub qualifications: (Characteristic, u8),
@@ -30,6 +31,7 @@ pub enum MaterialBenefit {
     Weapon,
 }
 
+#[derive(Debug)]
 pub enum Training {
     TC(Characteristic),
     TS(Skill),

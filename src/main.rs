@@ -18,6 +18,7 @@ use std::io;
 use homeworlds::*;
 use skills::*;
 use character::*;
+use careers::Career;
 
 fn main() {
     let ch = roll_characteristics();
@@ -27,17 +28,14 @@ fn main() {
         background_skills.iter()
                          .map(|ref n| format!("{:?}", n))
                          .collect::<Vec<_>>();
+    let careers = careers::careers();
+    let career = choose_career(&careers);
 
-    let careers_names = careers::careers()
-        .iter()
-        .map(|ref n| n.name.clone())
-        .collect::<Vec<_>>();
-
-    println!("{:?}", careers_names.join(", "));
     println!("Characteristics: {:?}", ch);
     println!("Characteristics UPP: {}", ch);
     println!("Homeworld: {:?}", homeworld);
     println!("Background skills: {:?}", background_skill_names.join(", "));
+    println!("Career: {:?}", career);
 }
 
 fn pick_a_thing<T>(things: &[T], header: &str) -> usize {
@@ -68,6 +66,18 @@ fn pick_a_thing<T>(things: &[T], header: &str) -> usize {
     }
 
     pick - 1
+}
+
+fn choose_career<'a>(careers: &'a Vec<Career>) -> &'a Career {
+    let careers_names = careers.iter()
+                               .map(|ref n| n.name.clone())
+                               .collect::<Vec<_>>();
+
+    let careers_format = format!("Careers: {:?}", careers_names);
+
+    let career_pick = pick_a_thing(&careers_names, careers_format.as_str());
+    let ref career = careers[career_pick];
+    career
 }
 
 fn choose_background_skills(homeworld: &Homeworld, education: u8) -> Vec<Skill> {
