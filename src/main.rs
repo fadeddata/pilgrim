@@ -8,7 +8,7 @@ mod homeworlds;
 mod skills;
 mod pseudo_hex;
 mod careers;
-mod character;
+mod character_sheet;
 
 //use time::Timespec;
 use rusqlite::Connection;
@@ -17,7 +17,7 @@ use dice::Die;
 use std::io;
 use homeworlds::*;
 use skills::*;
-use character::*;
+use character_sheet::*;
 use careers::Career;
 
 fn main() {
@@ -116,51 +116,33 @@ fn choose_homeworld() -> Homeworld {
 }
 
 fn roll_characteristics() -> Characteristics {
-    use Characteristic::*;
-
     let mut ch_rolls = Vec::with_capacity(6);
     let mut d6 = Die::new(6, &[55]);
     for _ in 0..6 {
         ch_rolls.push(d6.add_roll(2));
     }
 
-    let chars = vec![
-        Strength,
-        Dexterity,
-        Endurance,
-        Intelligence,
-        Education,
-        Social,
-    ];
+    let mut state = State::SelectStr;
 
-    let mut strength = 0;
-    let mut dexterity = 0;
-    let mut endurance = 0;
-    let mut intelligence = 0;
-    let mut education = 0;
-    let mut social = 0;
-
-    for char in chars {
+    while (state.characteristics().is_none()) {
+        ch_rolls.sort();
+        println!("{}", state.display_text());
         let rolls_format = format!("Rolls {:?}", ch_rolls);
         let pick = pick_a_thing(&ch_rolls, rolls_format.as_str());
-
-        match char {
-            Strength => strength = ch_rolls.swap_remove(pick),
-            Dexterity => dexterity = ch_rolls.swap_remove(pick),
-            Endurance => endurance = ch_rolls.swap_remove(pick),
-            Intelligence => intelligence = ch_rolls.swap_remove(pick),
-            Education => education = ch_rolls.swap_remove(pick),
-            Social => social = ch_rolls.swap_remove(pick),
-        }
+        let picked = ch_rolls.swap_remove(pick);
+        let event = Event::Pick(picked);
+        state = state.next(event);
     }
+
+    let ch = state.characteristics().unwrap();
 
     Characteristics {
         entity_id: 0,
-        strength: strength,
-        dexterity: dexterity,
-        endurance: endurance,
-        intelligence: intelligence,
-        education: education,
-        social: social,
+        strength: ch.strength,
+        dexterity: ch.dexterity,
+        endurance: ch.endurance,
+        intelligence: ch.intelligence,
+        education: ch.education,
+        social: ch.social,
     }
 }

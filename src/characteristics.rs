@@ -2,7 +2,7 @@ use rusqlite::Connection;
 use rusqlite::Error;
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Characteristics {
     pub entity_id: u32,
     pub strength: u8,
