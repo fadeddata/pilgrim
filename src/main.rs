@@ -1,5 +1,3 @@
-extern crate rusqlite;
-extern crate time;
 extern crate rand;
 
 mod characteristics;
@@ -10,8 +8,6 @@ mod pseudo_hex;
 mod careers;
 mod character_sheet;
 
-//use time::Timespec;
-use rusqlite::Connection;
 use characteristics::*;
 use dice::Die;
 use std::io;

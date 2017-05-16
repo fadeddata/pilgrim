@@ -5,9 +5,7 @@ version = "0.0.1"
 authors = [ "Dustin Withers <fadeddata@gmail.com>" ]
 
 [dependencies]
-time = "0.1.36"
 rand = "0.3"
-
-[dependencies.rusqlite]
-version = "0.11.0"
-features = ["bundled"]
+piston_window = "0.65.0"
+find_folder = "*"
+either = "1.0"
